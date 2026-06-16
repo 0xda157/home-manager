@@ -4,6 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
  <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
  <title>Appendix A. Home Manager Configuration Options</title>
 <link rel="stylesheet" type="text/css" href="style.css" />
 <script src="highlightjs/highlight.pack.js" type="text/javascript"></script><script src="highlightjs/loader.js" type="text/javascript"></script><script src="anchor-links.js" type="text/javascript"></script>
@@ -15106,8 +15107,8 @@ list of lib.maintainers</p>
 <p><span class="emphasis"><em>Declared by:</em></span></p>
 <table border="0" summary="Simple list" class="simplelist">
 <tr><td>
-<code class="filename"><a class="filename"  href="file:///nix/store/sixfvygd759vgqlj2dab825dldzzqp9s-source/modules/generic/meta-maintainers.nix" target="_top">
-/nix/store/sixfvygd759vgqlj2dab825dldzzqp9s-source/modules/generic/meta-maintainers.nix
+<code class="filename"><a class="filename"  href="file:///nix/store/0s46vlv8krpc6wfspxzsdfxlyhkp8m2k-source/modules/generic/meta-maintainers.nix" target="_top">
+/nix/store/0s46vlv8krpc6wfspxzsdfxlyhkp8m2k-source/modules/generic/meta-maintainers.nix
 </a></code>
 </td></tr>
 </table>
@@ -15134,8 +15135,8 @@ list of lib.teams</p>
 <p><span class="emphasis"><em>Declared by:</em></span></p>
 <table border="0" summary="Simple list" class="simplelist">
 <tr><td>
-<code class="filename"><a class="filename"  href="file:///nix/store/sixfvygd759vgqlj2dab825dldzzqp9s-source/modules/generic/meta-maintainers.nix" target="_top">
-/nix/store/sixfvygd759vgqlj2dab825dldzzqp9s-source/modules/generic/meta-maintainers.nix
+<code class="filename"><a class="filename"  href="file:///nix/store/0s46vlv8krpc6wfspxzsdfxlyhkp8m2k-source/modules/generic/meta-maintainers.nix" target="_top">
+/nix/store/0s46vlv8krpc6wfspxzsdfxlyhkp8m2k-source/modules/generic/meta-maintainers.nix
 </a></code>
 </td></tr>
 </table>
@@ -21171,9 +21172,9 @@ JSON value</p>
 </dt>
 <dd>
 <p>Custom skills for Antigravity CLI.</p><p>This option can be either:</p><div class="itemizedlist"><ul class="itemizedlist " style="list-style-type: disc;"><li class="listitem"><p>An attribute set defining skills</p></li><li class="listitem"><p>A path to a directory containing skill folders</p></li></ul></div><p>If an attribute set is used, the attribute name becomes the
-skill directory name, and the value is either:</p><div class="itemizedlist"><ul class="itemizedlist " style="list-style-type: disc;"><li class="listitem"><p>Inline content as a string (creates <code class="literal">~/.gemini/config/skills/&lt;name&gt;/SKILL.md</code>)</p></li><li class="listitem"><p>A path to a file (creates <code class="literal">~/.gemini/config/skills/&lt;name&gt;/SKILL.md</code>)</p></li><li class="listitem"><p>A path to a directory (symlinks <code class="literal">~/.gemini/config/skills/&lt;name&gt;/</code> to that directory)</p></li></ul></div><p>If a path is used, it is expected to contain one folder per
+skill directory name, and the value is either:</p><div class="itemizedlist"><ul class="itemizedlist " style="list-style-type: disc;"><li class="listitem"><p>Inline content as a string (creates <code class="literal">~/.gemini/antigravity-cli/skills/&lt;name&gt;/SKILL.md</code>)</p></li><li class="listitem"><p>A path to a file (creates <code class="literal">~/.gemini/antigravity-cli/skills/&lt;name&gt;/SKILL.md</code>)</p></li><li class="listitem"><p>A path to a directory (symlinks <code class="literal">~/.gemini/antigravity-cli/skills/&lt;name&gt;/</code> to that directory)</p></li></ul></div><p>If a path is used, it is expected to contain one folder per
 skill name, each containing a <code class="filename">SKILL.md</code>. The directory is
-symlinked to <code class="filename">~/.gemini/config/skills/</code>.</p>
+symlinked to <code class="filename">~/.gemini/antigravity-cli/skills/</code>.</p>
 
 <p><span class="emphasis"><em>Type:</em></span>
 (attribute set of (strings concatenated with “\n” or absolute path)) or absolute path</p>
@@ -29560,6 +29561,83 @@ strings concatenated with “\n” or absolute path</p>
 </dd>
 <dt>
  <span class="term">
+ <a id="opt-programs.codex.marketplaces"></a><a class="term" href="options.xhtml#opt-programs.codex.marketplaces"><code class="option">programs.codex.marketplaces</code>
+  </a>
+ </span>
+</dt>
+<dd>
+<p>Custom marketplaces for Codex plugins.
+The attribute name becomes the marketplace name, and the value is either:</p><div class="itemizedlist"><ul class="itemizedlist " style="list-style-type: disc;"><li class="listitem"><p>A path to the marketplace directory</p></li><li class="listitem"><p>The marketplace package, whether a nix package or the output of a fetcher</p></li></ul></div><p>Marketplaces are configured through <code class="filename">CODEX_HOME/config.toml</code>.</p>
+
+<p><span class="emphasis"><em>Type:</em></span>
+attribute set of (package or absolute path)</p>
+
+<p><span class="emphasis"><em>Default:</em></span></p><pre><code class="programlisting nix">{ }
+</code></pre>
+
+<p><span class="emphasis"><em>Example:</em></span></p><pre><code class="programlisting nix">{
+  local-marketplace = ./my-local-marketplace;
+  gh-marketplace = fetchFromGitHub {
+    owner = &quot;some-github-org&quot;;
+    repo = &quot;codex-marketplace&quot;;
+    rev = &quot;8a873a220b8427b25b03ce1a821593a24e098c34&quot;;
+    sha256 = &quot;5c2dce95122b5bb73fa547edabbb6c3061c2d193d11e51faecd4d22659e67279&quot;;
+  };
+}
+
+</code></pre>
+
+<p><span class="emphasis"><em>Declared by:</em></span></p>
+<table border="0" summary="Simple list" class="simplelist">
+<tr><td>
+<code class="filename"><a class="filename"  href="https://github.com/nix-community/home-manager/blob/master/modules/programs/codex.nix" target="_top">
+&lt;home-manager/modules/programs/codex.nix&gt;
+</a></code>
+</td></tr>
+</table>
+</dd>
+<dt>
+ <span class="term">
+ <a id="opt-programs.codex.plugins"></a><a class="term" href="options.xhtml#opt-programs.codex.plugins"><code class="option">programs.codex.plugins</code>
+  </a>
+ </span>
+</dt>
+<dd>
+<p>List of plugins to use when running Codex.
+Each entry is either:</p><div class="itemizedlist"><ul class="itemizedlist " style="list-style-type: disc;"><li class="listitem"><p>A path to the plugin directory</p></li><li class="listitem"><p>The plugin package, whether a nix package or the output of a fetcher
+Plugins are installed into Codex’s plugin cache and enabled through
+<code class="filename">CODEX_HOME/config.toml</code>.</p></li></ul></div><p>Warning: If using a derivation as the source for a plugin, make sure that
+the derivation name matches the name of the plugin in the manifest file.</p>
+
+<p><span class="emphasis"><em>Type:</em></span>
+list of (package or absolute path)</p>
+
+<p><span class="emphasis"><em>Default:</em></span></p><pre><code class="programlisting nix">[ ]
+</code></pre>
+
+<p><span class="emphasis"><em>Example:</em></span></p><pre><code class="programlisting nix">[
+  ./my-local-plugin
+  (fetchFromGitHub {
+    owner = &quot;some-github-org&quot;;
+    repo = &quot;codex-plugin&quot;;
+    rev = &quot;779a68ebc2a75e4a184d2c87e5a43a758e6458a1&quot;;
+    sha256 = &quot;228fdd7e5908ea1d2f65218ecd9c71e1eefa0834d200d55fbb8bf8b5563acec0&quot;;
+  })
+]
+
+</code></pre>
+
+<p><span class="emphasis"><em>Declared by:</em></span></p>
+<table border="0" summary="Simple list" class="simplelist">
+<tr><td>
+<code class="filename"><a class="filename"  href="https://github.com/nix-community/home-manager/blob/master/modules/programs/codex.nix" target="_top">
+&lt;home-manager/modules/programs/codex.nix&gt;
+</a></code>
+</td></tr>
+</table>
+</dd>
+<dt>
+ <span class="term">
  <a id="opt-programs.codex.rules"></a><a class="term" href="options.xhtml#opt-programs.codex.rules"><code class="option">programs.codex.rules</code>
   </a>
  </span>
@@ -30689,6 +30767,35 @@ list of string</p>
   &quot;.iml$&quot;
   &quot;^.stack-work$&quot;
 ]
+</code></pre>
+
+<p><span class="emphasis"><em>Declared by:</em></span></p>
+<table border="0" summary="Simple list" class="simplelist">
+<tr><td>
+<code class="filename"><a class="filename"  href="https://github.com/nix-community/home-manager/blob/master/modules/programs/darcs.nix" target="_top">
+&lt;home-manager/modules/programs/darcs.nix&gt;
+</a></code>
+</td></tr>
+</table>
+</dd>
+<dt>
+ <span class="term">
+ <a id="opt-programs.darcs.defaults"></a><a class="term" href="options.xhtml#opt-programs.darcs.defaults"><code class="option">programs.darcs.defaults</code>
+  </a>
+ </span>
+</dt>
+<dd>
+<p>Default values for Darcs commands.</p><p>See <a class="link" href="https://darcs.net/Using/Configuration#defaults"  target="_top">https://darcs.net/Using/Configuration#defaults</a> for details.</p>
+
+<p><span class="emphasis"><em>Type:</em></span>
+null or strings concatenated with “\n”</p>
+
+<p><span class="emphasis"><em>Default:</em></span></p><pre><code class="programlisting nix">&quot;&quot;
+</code></pre>
+
+<p><span class="emphasis"><em>Example:</em></span></p><pre><code class="programlisting nix">&#x27;&#x27;
+  ALL ignore-times
+&#x27;&#x27;
 </code></pre>
 
 <p><span class="emphasis"><em>Declared by:</em></span></p>
@@ -35089,8 +35196,8 @@ list of lib.maintainers</p>
 <p><span class="emphasis"><em>Declared by:</em></span></p>
 <table border="0" summary="Simple list" class="simplelist">
 <tr><td>
-<code class="filename"><a class="filename"  href="file:///nix/store/sixfvygd759vgqlj2dab825dldzzqp9s-source/modules/generic/meta-maintainers.nix" target="_top">
-/nix/store/sixfvygd759vgqlj2dab825dldzzqp9s-source/modules/generic/meta-maintainers.nix
+<code class="filename"><a class="filename"  href="file:///nix/store/0s46vlv8krpc6wfspxzsdfxlyhkp8m2k-source/modules/generic/meta-maintainers.nix" target="_top">
+/nix/store/0s46vlv8krpc6wfspxzsdfxlyhkp8m2k-source/modules/generic/meta-maintainers.nix
 </a></code>
 </td></tr>
 </table>
@@ -35117,8 +35224,8 @@ list of lib.teams</p>
 <p><span class="emphasis"><em>Declared by:</em></span></p>
 <table border="0" summary="Simple list" class="simplelist">
 <tr><td>
-<code class="filename"><a class="filename"  href="file:///nix/store/sixfvygd759vgqlj2dab825dldzzqp9s-source/modules/generic/meta-maintainers.nix" target="_top">
-/nix/store/sixfvygd759vgqlj2dab825dldzzqp9s-source/modules/generic/meta-maintainers.nix
+<code class="filename"><a class="filename"  href="file:///nix/store/0s46vlv8krpc6wfspxzsdfxlyhkp8m2k-source/modules/generic/meta-maintainers.nix" target="_top">
+/nix/store/0s46vlv8krpc6wfspxzsdfxlyhkp8m2k-source/modules/generic/meta-maintainers.nix
 </a></code>
 </td></tr>
 </table>
@@ -35743,8 +35850,8 @@ list of lib.maintainers</p>
 <p><span class="emphasis"><em>Declared by:</em></span></p>
 <table border="0" summary="Simple list" class="simplelist">
 <tr><td>
-<code class="filename"><a class="filename"  href="file:///nix/store/sixfvygd759vgqlj2dab825dldzzqp9s-source/modules/generic/meta-maintainers.nix" target="_top">
-/nix/store/sixfvygd759vgqlj2dab825dldzzqp9s-source/modules/generic/meta-maintainers.nix
+<code class="filename"><a class="filename"  href="file:///nix/store/0s46vlv8krpc6wfspxzsdfxlyhkp8m2k-source/modules/generic/meta-maintainers.nix" target="_top">
+/nix/store/0s46vlv8krpc6wfspxzsdfxlyhkp8m2k-source/modules/generic/meta-maintainers.nix
 </a></code>
 </td></tr>
 </table>
@@ -35771,8 +35878,8 @@ list of lib.teams</p>
 <p><span class="emphasis"><em>Declared by:</em></span></p>
 <table border="0" summary="Simple list" class="simplelist">
 <tr><td>
-<code class="filename"><a class="filename"  href="file:///nix/store/sixfvygd759vgqlj2dab825dldzzqp9s-source/modules/generic/meta-maintainers.nix" target="_top">
-/nix/store/sixfvygd759vgqlj2dab825dldzzqp9s-source/modules/generic/meta-maintainers.nix
+<code class="filename"><a class="filename"  href="file:///nix/store/0s46vlv8krpc6wfspxzsdfxlyhkp8m2k-source/modules/generic/meta-maintainers.nix" target="_top">
+/nix/store/0s46vlv8krpc6wfspxzsdfxlyhkp8m2k-source/modules/generic/meta-maintainers.nix
 </a></code>
 </td></tr>
 </table>
@@ -36465,8 +36572,8 @@ list of lib.maintainers</p>
 <p><span class="emphasis"><em>Declared by:</em></span></p>
 <table border="0" summary="Simple list" class="simplelist">
 <tr><td>
-<code class="filename"><a class="filename"  href="file:///nix/store/sixfvygd759vgqlj2dab825dldzzqp9s-source/modules/generic/meta-maintainers.nix" target="_top">
-/nix/store/sixfvygd759vgqlj2dab825dldzzqp9s-source/modules/generic/meta-maintainers.nix
+<code class="filename"><a class="filename"  href="file:///nix/store/0s46vlv8krpc6wfspxzsdfxlyhkp8m2k-source/modules/generic/meta-maintainers.nix" target="_top">
+/nix/store/0s46vlv8krpc6wfspxzsdfxlyhkp8m2k-source/modules/generic/meta-maintainers.nix
 </a></code>
 </td></tr>
 </table>
@@ -36493,8 +36600,8 @@ list of lib.teams</p>
 <p><span class="emphasis"><em>Declared by:</em></span></p>
 <table border="0" summary="Simple list" class="simplelist">
 <tr><td>
-<code class="filename"><a class="filename"  href="file:///nix/store/sixfvygd759vgqlj2dab825dldzzqp9s-source/modules/generic/meta-maintainers.nix" target="_top">
-/nix/store/sixfvygd759vgqlj2dab825dldzzqp9s-source/modules/generic/meta-maintainers.nix
+<code class="filename"><a class="filename"  href="file:///nix/store/0s46vlv8krpc6wfspxzsdfxlyhkp8m2k-source/modules/generic/meta-maintainers.nix" target="_top">
+/nix/store/0s46vlv8krpc6wfspxzsdfxlyhkp8m2k-source/modules/generic/meta-maintainers.nix
 </a></code>
 </td></tr>
 </table>
@@ -38627,8 +38734,8 @@ list of lib.maintainers</p>
 <p><span class="emphasis"><em>Declared by:</em></span></p>
 <table border="0" summary="Simple list" class="simplelist">
 <tr><td>
-<code class="filename"><a class="filename"  href="file:///nix/store/sixfvygd759vgqlj2dab825dldzzqp9s-source/modules/generic/meta-maintainers.nix" target="_top">
-/nix/store/sixfvygd759vgqlj2dab825dldzzqp9s-source/modules/generic/meta-maintainers.nix
+<code class="filename"><a class="filename"  href="file:///nix/store/0s46vlv8krpc6wfspxzsdfxlyhkp8m2k-source/modules/generic/meta-maintainers.nix" target="_top">
+/nix/store/0s46vlv8krpc6wfspxzsdfxlyhkp8m2k-source/modules/generic/meta-maintainers.nix
 </a></code>
 </td></tr>
 </table>
@@ -38655,8 +38762,8 @@ list of lib.teams</p>
 <p><span class="emphasis"><em>Declared by:</em></span></p>
 <table border="0" summary="Simple list" class="simplelist">
 <tr><td>
-<code class="filename"><a class="filename"  href="file:///nix/store/sixfvygd759vgqlj2dab825dldzzqp9s-source/modules/generic/meta-maintainers.nix" target="_top">
-/nix/store/sixfvygd759vgqlj2dab825dldzzqp9s-source/modules/generic/meta-maintainers.nix
+<code class="filename"><a class="filename"  href="file:///nix/store/0s46vlv8krpc6wfspxzsdfxlyhkp8m2k-source/modules/generic/meta-maintainers.nix" target="_top">
+/nix/store/0s46vlv8krpc6wfspxzsdfxlyhkp8m2k-source/modules/generic/meta-maintainers.nix
 </a></code>
 </td></tr>
 </table>
@@ -39281,8 +39388,8 @@ list of lib.maintainers</p>
 <p><span class="emphasis"><em>Declared by:</em></span></p>
 <table border="0" summary="Simple list" class="simplelist">
 <tr><td>
-<code class="filename"><a class="filename"  href="file:///nix/store/sixfvygd759vgqlj2dab825dldzzqp9s-source/modules/generic/meta-maintainers.nix" target="_top">
-/nix/store/sixfvygd759vgqlj2dab825dldzzqp9s-source/modules/generic/meta-maintainers.nix
+<code class="filename"><a class="filename"  href="file:///nix/store/0s46vlv8krpc6wfspxzsdfxlyhkp8m2k-source/modules/generic/meta-maintainers.nix" target="_top">
+/nix/store/0s46vlv8krpc6wfspxzsdfxlyhkp8m2k-source/modules/generic/meta-maintainers.nix
 </a></code>
 </td></tr>
 </table>
@@ -39309,8 +39416,8 @@ list of lib.teams</p>
 <p><span class="emphasis"><em>Declared by:</em></span></p>
 <table border="0" summary="Simple list" class="simplelist">
 <tr><td>
-<code class="filename"><a class="filename"  href="file:///nix/store/sixfvygd759vgqlj2dab825dldzzqp9s-source/modules/generic/meta-maintainers.nix" target="_top">
-/nix/store/sixfvygd759vgqlj2dab825dldzzqp9s-source/modules/generic/meta-maintainers.nix
+<code class="filename"><a class="filename"  href="file:///nix/store/0s46vlv8krpc6wfspxzsdfxlyhkp8m2k-source/modules/generic/meta-maintainers.nix" target="_top">
+/nix/store/0s46vlv8krpc6wfspxzsdfxlyhkp8m2k-source/modules/generic/meta-maintainers.nix
 </a></code>
 </td></tr>
 </table>
@@ -40003,8 +40110,8 @@ list of lib.maintainers</p>
 <p><span class="emphasis"><em>Declared by:</em></span></p>
 <table border="0" summary="Simple list" class="simplelist">
 <tr><td>
-<code class="filename"><a class="filename"  href="file:///nix/store/sixfvygd759vgqlj2dab825dldzzqp9s-source/modules/generic/meta-maintainers.nix" target="_top">
-/nix/store/sixfvygd759vgqlj2dab825dldzzqp9s-source/modules/generic/meta-maintainers.nix
+<code class="filename"><a class="filename"  href="file:///nix/store/0s46vlv8krpc6wfspxzsdfxlyhkp8m2k-source/modules/generic/meta-maintainers.nix" target="_top">
+/nix/store/0s46vlv8krpc6wfspxzsdfxlyhkp8m2k-source/modules/generic/meta-maintainers.nix
 </a></code>
 </td></tr>
 </table>
@@ -40031,8 +40138,8 @@ list of lib.teams</p>
 <p><span class="emphasis"><em>Declared by:</em></span></p>
 <table border="0" summary="Simple list" class="simplelist">
 <tr><td>
-<code class="filename"><a class="filename"  href="file:///nix/store/sixfvygd759vgqlj2dab825dldzzqp9s-source/modules/generic/meta-maintainers.nix" target="_top">
-/nix/store/sixfvygd759vgqlj2dab825dldzzqp9s-source/modules/generic/meta-maintainers.nix
+<code class="filename"><a class="filename"  href="file:///nix/store/0s46vlv8krpc6wfspxzsdfxlyhkp8m2k-source/modules/generic/meta-maintainers.nix" target="_top">
+/nix/store/0s46vlv8krpc6wfspxzsdfxlyhkp8m2k-source/modules/generic/meta-maintainers.nix
 </a></code>
 </td></tr>
 </table>
@@ -54485,6 +54592,111 @@ absolute path or JSON value</p>
 </dd>
 <dt>
  <span class="term">
+ <a id="opt-programs.kiro-cli.enable"></a><a class="term" href="options.xhtml#opt-programs.kiro-cli.enable"><code class="option">programs.kiro-cli.enable</code>
+  </a>
+ </span>
+</dt>
+<dd>
+<p>Whether to enable kiro-cli, the command-line interface for Kiro.</p>
+
+<p><span class="emphasis"><em>Type:</em></span>
+boolean</p>
+
+<p><span class="emphasis"><em>Default:</em></span></p><pre><code class="programlisting nix">false
+</code></pre>
+
+<p><span class="emphasis"><em>Example:</em></span></p><pre><code class="programlisting nix">true
+</code></pre>
+
+<p><span class="emphasis"><em>Declared by:</em></span></p>
+<table border="0" summary="Simple list" class="simplelist">
+<tr><td>
+<code class="filename"><a class="filename"  href="https://github.com/nix-community/home-manager/blob/master/modules/programs/kiro-cli.nix" target="_top">
+&lt;home-manager/modules/programs/kiro-cli.nix&gt;
+</a></code>
+</td></tr>
+</table>
+</dd>
+<dt>
+ <span class="term">
+ <a id="opt-programs.kiro-cli.enableBashIntegration"></a><a class="term" href="options.xhtml#opt-programs.kiro-cli.enableBashIntegration"><code class="option">programs.kiro-cli.enableBashIntegration</code>
+  </a>
+ </span>
+</dt>
+<dd>
+<p>Whether to enable Bash integration.</p>
+
+<p><span class="emphasis"><em>Type:</em></span>
+boolean</p>
+
+<p><span class="emphasis"><em>Default:</em></span>
+<a class="xref" href="options.xhtml#opt-home.shell.enableBashIntegration"  ><code class="option">home.shell.enableBashIntegration</code></a></p>
+
+<p><span class="emphasis"><em>Example:</em></span></p><pre><code class="programlisting nix">false
+</code></pre>
+
+<p><span class="emphasis"><em>Declared by:</em></span></p>
+<table border="0" summary="Simple list" class="simplelist">
+<tr><td>
+<code class="filename"><a class="filename"  href="https://github.com/nix-community/home-manager/blob/master/modules/programs/kiro-cli.nix" target="_top">
+&lt;home-manager/modules/programs/kiro-cli.nix&gt;
+</a></code>
+</td></tr>
+</table>
+</dd>
+<dt>
+ <span class="term">
+ <a id="opt-programs.kiro-cli.enableZshIntegration"></a><a class="term" href="options.xhtml#opt-programs.kiro-cli.enableZshIntegration"><code class="option">programs.kiro-cli.enableZshIntegration</code>
+  </a>
+ </span>
+</dt>
+<dd>
+<p>Whether to enable Zsh integration.</p>
+
+<p><span class="emphasis"><em>Type:</em></span>
+boolean</p>
+
+<p><span class="emphasis"><em>Default:</em></span>
+<a class="xref" href="options.xhtml#opt-home.shell.enableZshIntegration"  ><code class="option">home.shell.enableZshIntegration</code></a></p>
+
+<p><span class="emphasis"><em>Example:</em></span></p><pre><code class="programlisting nix">false
+</code></pre>
+
+<p><span class="emphasis"><em>Declared by:</em></span></p>
+<table border="0" summary="Simple list" class="simplelist">
+<tr><td>
+<code class="filename"><a class="filename"  href="https://github.com/nix-community/home-manager/blob/master/modules/programs/kiro-cli.nix" target="_top">
+&lt;home-manager/modules/programs/kiro-cli.nix&gt;
+</a></code>
+</td></tr>
+</table>
+</dd>
+<dt>
+ <span class="term">
+ <a id="opt-programs.kiro-cli.package"></a><a class="term" href="options.xhtml#opt-programs.kiro-cli.package"><code class="option">programs.kiro-cli.package</code>
+  </a>
+ </span>
+</dt>
+<dd>
+<p>The kiro-cli package to use.</p>
+
+<p><span class="emphasis"><em>Type:</em></span>
+package</p>
+
+<p><span class="emphasis"><em>Default:</em></span></p><pre><code class="programlisting nix">pkgs.kiro-cli
+</code></pre>
+
+<p><span class="emphasis"><em>Declared by:</em></span></p>
+<table border="0" summary="Simple list" class="simplelist">
+<tr><td>
+<code class="filename"><a class="filename"  href="https://github.com/nix-community/home-manager/blob/master/modules/programs/kiro-cli.nix" target="_top">
+&lt;home-manager/modules/programs/kiro-cli.nix&gt;
+</a></code>
+</td></tr>
+</table>
+</dd>
+<dt>
+ <span class="term">
  <a id="opt-programs.kitty.enable"></a><a class="term" href="options.xhtml#opt-programs.kitty.enable"><code class="option">programs.kitty.enable</code>
   </a>
  </span>
@@ -57712,8 +57924,8 @@ list of lib.maintainers</p>
 <p><span class="emphasis"><em>Declared by:</em></span></p>
 <table border="0" summary="Simple list" class="simplelist">
 <tr><td>
-<code class="filename"><a class="filename"  href="file:///nix/store/sixfvygd759vgqlj2dab825dldzzqp9s-source/modules/generic/meta-maintainers.nix" target="_top">
-/nix/store/sixfvygd759vgqlj2dab825dldzzqp9s-source/modules/generic/meta-maintainers.nix
+<code class="filename"><a class="filename"  href="file:///nix/store/0s46vlv8krpc6wfspxzsdfxlyhkp8m2k-source/modules/generic/meta-maintainers.nix" target="_top">
+/nix/store/0s46vlv8krpc6wfspxzsdfxlyhkp8m2k-source/modules/generic/meta-maintainers.nix
 </a></code>
 </td></tr>
 </table>
@@ -57740,8 +57952,8 @@ list of lib.teams</p>
 <p><span class="emphasis"><em>Declared by:</em></span></p>
 <table border="0" summary="Simple list" class="simplelist">
 <tr><td>
-<code class="filename"><a class="filename"  href="file:///nix/store/sixfvygd759vgqlj2dab825dldzzqp9s-source/modules/generic/meta-maintainers.nix" target="_top">
-/nix/store/sixfvygd759vgqlj2dab825dldzzqp9s-source/modules/generic/meta-maintainers.nix
+<code class="filename"><a class="filename"  href="file:///nix/store/0s46vlv8krpc6wfspxzsdfxlyhkp8m2k-source/modules/generic/meta-maintainers.nix" target="_top">
+/nix/store/0s46vlv8krpc6wfspxzsdfxlyhkp8m2k-source/modules/generic/meta-maintainers.nix
 </a></code>
 </td></tr>
 </table>
@@ -58366,8 +58578,8 @@ list of lib.maintainers</p>
 <p><span class="emphasis"><em>Declared by:</em></span></p>
 <table border="0" summary="Simple list" class="simplelist">
 <tr><td>
-<code class="filename"><a class="filename"  href="file:///nix/store/sixfvygd759vgqlj2dab825dldzzqp9s-source/modules/generic/meta-maintainers.nix" target="_top">
-/nix/store/sixfvygd759vgqlj2dab825dldzzqp9s-source/modules/generic/meta-maintainers.nix
+<code class="filename"><a class="filename"  href="file:///nix/store/0s46vlv8krpc6wfspxzsdfxlyhkp8m2k-source/modules/generic/meta-maintainers.nix" target="_top">
+/nix/store/0s46vlv8krpc6wfspxzsdfxlyhkp8m2k-source/modules/generic/meta-maintainers.nix
 </a></code>
 </td></tr>
 </table>
@@ -58394,8 +58606,8 @@ list of lib.teams</p>
 <p><span class="emphasis"><em>Declared by:</em></span></p>
 <table border="0" summary="Simple list" class="simplelist">
 <tr><td>
-<code class="filename"><a class="filename"  href="file:///nix/store/sixfvygd759vgqlj2dab825dldzzqp9s-source/modules/generic/meta-maintainers.nix" target="_top">
-/nix/store/sixfvygd759vgqlj2dab825dldzzqp9s-source/modules/generic/meta-maintainers.nix
+<code class="filename"><a class="filename"  href="file:///nix/store/0s46vlv8krpc6wfspxzsdfxlyhkp8m2k-source/modules/generic/meta-maintainers.nix" target="_top">
+/nix/store/0s46vlv8krpc6wfspxzsdfxlyhkp8m2k-source/modules/generic/meta-maintainers.nix
 </a></code>
 </td></tr>
 </table>
@@ -59088,8 +59300,8 @@ list of lib.maintainers</p>
 <p><span class="emphasis"><em>Declared by:</em></span></p>
 <table border="0" summary="Simple list" class="simplelist">
 <tr><td>
-<code class="filename"><a class="filename"  href="file:///nix/store/sixfvygd759vgqlj2dab825dldzzqp9s-source/modules/generic/meta-maintainers.nix" target="_top">
-/nix/store/sixfvygd759vgqlj2dab825dldzzqp9s-source/modules/generic/meta-maintainers.nix
+<code class="filename"><a class="filename"  href="file:///nix/store/0s46vlv8krpc6wfspxzsdfxlyhkp8m2k-source/modules/generic/meta-maintainers.nix" target="_top">
+/nix/store/0s46vlv8krpc6wfspxzsdfxlyhkp8m2k-source/modules/generic/meta-maintainers.nix
 </a></code>
 </td></tr>
 </table>
@@ -59116,8 +59328,8 @@ list of lib.teams</p>
 <p><span class="emphasis"><em>Declared by:</em></span></p>
 <table border="0" summary="Simple list" class="simplelist">
 <tr><td>
-<code class="filename"><a class="filename"  href="file:///nix/store/sixfvygd759vgqlj2dab825dldzzqp9s-source/modules/generic/meta-maintainers.nix" target="_top">
-/nix/store/sixfvygd759vgqlj2dab825dldzzqp9s-source/modules/generic/meta-maintainers.nix
+<code class="filename"><a class="filename"  href="file:///nix/store/0s46vlv8krpc6wfspxzsdfxlyhkp8m2k-source/modules/generic/meta-maintainers.nix" target="_top">
+/nix/store/0s46vlv8krpc6wfspxzsdfxlyhkp8m2k-source/modules/generic/meta-maintainers.nix
 </a></code>
 </td></tr>
 </table>
@@ -63068,11 +63280,11 @@ boolean</p>
  </span>
 </dt>
 <dd>
-<p>MCP server configurations written to
-<code class="filename">XDG_CONFIG_HOME/mcp/mcp.json</code></p>
+<p>MCP server configurations written to <code class="filename">$XDG_CONFIG_HOME/mcp/mcp.json</code>.</p><p>Each server is either a local (stdio) server via <code class="option">command</code>
+or a remote (HTTP/SSE) server via <code class="option">url</code>.</p><p>Besides declared options, arbitrary MCP fields are allowed.</p>
 
 <p><span class="emphasis"><em>Type:</em></span>
-JSON value</p>
+attribute set of (open submodule of (JSON value))</p>
 
 <p><span class="emphasis"><em>Default:</em></span></p><pre><code class="programlisting nix">{ }
 </code></pre>
@@ -63080,19 +63292,195 @@ JSON value</p>
 <p><span class="emphasis"><em>Example:</em></span></p><pre><code class="programlisting nix">{
   everything = {
     command = &quot;npx&quot;;
-    args = [
-      &quot;-y&quot;
-      &quot;@modelcontextprotocol/server-everything&quot;
-    ];
+    args = [ &quot;-y&quot; &quot;@modelcontextprotocol/server-everything&quot; ];
   };
   context7 = {
     url = &quot;https://mcp.context7.com/mcp&quot;;
-    headers = {
-      CONTEXT7_API_KEY = &quot;{env:CONTEXT7_API_KEY}&quot;;
-    };
+    headers.CONTEXT7_API_KEY = &quot;{env:CONTEXT7_API_KEY}&quot;;
+  };
+  codeberg = {
+    command = &quot;/path/to/forgejo-mcp&quot;;
+    args = [ &quot;transport&quot; &quot;stdio&quot; &quot;--url&quot; &quot;https://codeberg.org&quot; ];
+    env.FORGEJO_ACCESS_TOKEN.file = &quot;/run/secrets/codeberg_token&quot;;
   };
 }
 
+</code></pre>
+
+<p><span class="emphasis"><em>Declared by:</em></span></p>
+<table border="0" summary="Simple list" class="simplelist">
+<tr><td>
+<code class="filename"><a class="filename"  href="https://github.com/nix-community/home-manager/blob/master/modules/programs/mcp.nix" target="_top">
+&lt;home-manager/modules/programs/mcp.nix&gt;
+</a></code>
+</td></tr>
+</table>
+</dd>
+<dt>
+ <span class="term">
+ <a id="opt-programs.mcp.servers._name_.enabled"></a><a class="term" href="options.xhtml#opt-programs.mcp.servers._name_.enabled"><code class="option">programs.mcp.servers.&lt;name&gt;.enabled</code>
+  </a>
+ </span>
+</dt>
+<dd>
+<p>Whether this MCP server is enabled.</p><p>If this option and <code class="literal">disabled</code> are both set, they must satisfy
+<code class="literal">enabled == !disabled</code>.</p>
+
+<p><span class="emphasis"><em>Type:</em></span>
+null or boolean</p>
+
+<p><span class="emphasis"><em>Default:</em></span></p><pre><code class="programlisting nix">null
+</code></pre>
+
+<p><span class="emphasis"><em>Declared by:</em></span></p>
+<table border="0" summary="Simple list" class="simplelist">
+<tr><td>
+<code class="filename"><a class="filename"  href="https://github.com/nix-community/home-manager/blob/master/modules/programs/mcp.nix" target="_top">
+&lt;home-manager/modules/programs/mcp.nix&gt;
+</a></code>
+</td></tr>
+</table>
+</dd>
+<dt>
+ <span class="term">
+ <a id="opt-programs.mcp.servers._name_.args"></a><a class="term" href="options.xhtml#opt-programs.mcp.servers._name_.args"><code class="option">programs.mcp.servers.&lt;name&gt;.args</code>
+  </a>
+ </span>
+</dt>
+<dd>
+<p>Arguments passed to <code class="option">command</code>.
+Only valid for local servers.</p>
+
+<p><span class="emphasis"><em>Type:</em></span>
+list of string</p>
+
+<p><span class="emphasis"><em>Default:</em></span></p><pre><code class="programlisting nix">[ ]
+</code></pre>
+
+<p><span class="emphasis"><em>Example:</em></span></p><pre><code class="programlisting nix">[
+  &quot;-y&quot;
+  &quot;@modelcontextprotocol/server-everything&quot;
+]
+</code></pre>
+
+<p><span class="emphasis"><em>Declared by:</em></span></p>
+<table border="0" summary="Simple list" class="simplelist">
+<tr><td>
+<code class="filename"><a class="filename"  href="https://github.com/nix-community/home-manager/blob/master/modules/programs/mcp.nix" target="_top">
+&lt;home-manager/modules/programs/mcp.nix&gt;
+</a></code>
+</td></tr>
+</table>
+</dd>
+<dt>
+ <span class="term">
+ <a id="opt-programs.mcp.servers._name_.command"></a><a class="term" href="options.xhtml#opt-programs.mcp.servers._name_.command"><code class="option">programs.mcp.servers.&lt;name&gt;.command</code>
+  </a>
+ </span>
+</dt>
+<dd>
+<p>Executable for a local (stdio) MCP server.
+Mutually exclusive with <code class="option">url</code>.</p>
+
+<p><span class="emphasis"><em>Type:</em></span>
+null or string</p>
+
+<p><span class="emphasis"><em>Default:</em></span></p><pre><code class="programlisting nix">null
+</code></pre>
+
+<p><span class="emphasis"><em>Example:</em></span></p><pre><code class="programlisting nix">&quot;npx&quot;
+</code></pre>
+
+<p><span class="emphasis"><em>Declared by:</em></span></p>
+<table border="0" summary="Simple list" class="simplelist">
+<tr><td>
+<code class="filename"><a class="filename"  href="https://github.com/nix-community/home-manager/blob/master/modules/programs/mcp.nix" target="_top">
+&lt;home-manager/modules/programs/mcp.nix&gt;
+</a></code>
+</td></tr>
+</table>
+</dd>
+<dt>
+ <span class="term">
+ <a id="opt-programs.mcp.servers._name_.env"></a><a class="term" href="options.xhtml#opt-programs.mcp.servers._name_.env"><code class="option">programs.mcp.servers.&lt;name&gt;.env</code>
+  </a>
+ </span>
+</dt>
+<dd>
+<p>Environment variables set when spawning the MCP server.
+Each value is either a literal string or a file reference
+(<code class="literal">{ file = &quot;/path&quot;; }</code>).</p><p>File references behave differently depending on the consumer:</p><div class="itemizedlist"><ul class="itemizedlist " style="list-style-type: disc;"><li class="listitem"><p>Clients that understand the <code class="literal">{file:…}</code> syntax (e.g. opencode)
+receive the path as a substitution token.</p></li><li class="listitem"><p>Other clients receive a generated wrapper script that reads
+the secret at startup instead.</p></li></ul></div><p>Only valid for local servers.</p>
+
+<p><span class="emphasis"><em>Type:</em></span>
+attribute set of (string or (submodule))</p>
+
+<p><span class="emphasis"><em>Default:</em></span></p><pre><code class="programlisting nix">{ }
+</code></pre>
+
+<p><span class="emphasis"><em>Example:</em></span></p><pre><code class="programlisting nix">{
+  API_BASE_URL = &quot;https://api.example.com&quot;;
+  FORGEJO_ACCESS_TOKEN.file = &quot;/run/secrets/forgejo_token&quot;;
+}
+
+</code></pre>
+
+<p><span class="emphasis"><em>Declared by:</em></span></p>
+<table border="0" summary="Simple list" class="simplelist">
+<tr><td>
+<code class="filename"><a class="filename"  href="https://github.com/nix-community/home-manager/blob/master/modules/programs/mcp.nix" target="_top">
+&lt;home-manager/modules/programs/mcp.nix&gt;
+</a></code>
+</td></tr>
+</table>
+</dd>
+<dt>
+ <span class="term">
+ <a id="opt-programs.mcp.servers._name_.headers"></a><a class="term" href="options.xhtml#opt-programs.mcp.servers._name_.headers"><code class="option">programs.mcp.servers.&lt;name&gt;.headers</code>
+  </a>
+ </span>
+</dt>
+<dd>
+<p>HTTP headers for requests to a remote MCP server.
+Only valid for remote servers.</p>
+
+<p><span class="emphasis"><em>Type:</em></span>
+attribute set of string</p>
+
+<p><span class="emphasis"><em>Default:</em></span></p><pre><code class="programlisting nix">{ }
+</code></pre>
+
+<p><span class="emphasis"><em>Example:</em></span></p><pre><code class="programlisting nix">{ MY_API_KEY = &quot;{env:MY_API_KEY}&quot;; }
+
+</code></pre>
+
+<p><span class="emphasis"><em>Declared by:</em></span></p>
+<table border="0" summary="Simple list" class="simplelist">
+<tr><td>
+<code class="filename"><a class="filename"  href="https://github.com/nix-community/home-manager/blob/master/modules/programs/mcp.nix" target="_top">
+&lt;home-manager/modules/programs/mcp.nix&gt;
+</a></code>
+</td></tr>
+</table>
+</dd>
+<dt>
+ <span class="term">
+ <a id="opt-programs.mcp.servers._name_.url"></a><a class="term" href="options.xhtml#opt-programs.mcp.servers._name_.url"><code class="option">programs.mcp.servers.&lt;name&gt;.url</code>
+  </a>
+ </span>
+</dt>
+<dd>
+<p>HTTP(S) endpoint for a remote (SSE/HTTP) MCP server.
+Mutually exclusive with <code class="option">command</code>.</p>
+
+<p><span class="emphasis"><em>Type:</em></span>
+null or string</p>
+
+<p><span class="emphasis"><em>Default:</em></span></p><pre><code class="programlisting nix">null
+</code></pre>
+
+<p><span class="emphasis"><em>Example:</em></span></p><pre><code class="programlisting nix">&quot;https://mcp.context7.com/mcp&quot;
 </code></pre>
 
 <p><span class="emphasis"><em>Declared by:</em></span></p>
@@ -90865,8 +91253,8 @@ list of lib.maintainers</p>
 <p><span class="emphasis"><em>Declared by:</em></span></p>
 <table border="0" summary="Simple list" class="simplelist">
 <tr><td>
-<code class="filename"><a class="filename"  href="file:///nix/store/sixfvygd759vgqlj2dab825dldzzqp9s-source/modules/generic/meta-maintainers.nix" target="_top">
-/nix/store/sixfvygd759vgqlj2dab825dldzzqp9s-source/modules/generic/meta-maintainers.nix
+<code class="filename"><a class="filename"  href="file:///nix/store/0s46vlv8krpc6wfspxzsdfxlyhkp8m2k-source/modules/generic/meta-maintainers.nix" target="_top">
+/nix/store/0s46vlv8krpc6wfspxzsdfxlyhkp8m2k-source/modules/generic/meta-maintainers.nix
 </a></code>
 </td></tr>
 </table>
@@ -90893,8 +91281,8 @@ list of lib.teams</p>
 <p><span class="emphasis"><em>Declared by:</em></span></p>
 <table border="0" summary="Simple list" class="simplelist">
 <tr><td>
-<code class="filename"><a class="filename"  href="file:///nix/store/sixfvygd759vgqlj2dab825dldzzqp9s-source/modules/generic/meta-maintainers.nix" target="_top">
-/nix/store/sixfvygd759vgqlj2dab825dldzzqp9s-source/modules/generic/meta-maintainers.nix
+<code class="filename"><a class="filename"  href="file:///nix/store/0s46vlv8krpc6wfspxzsdfxlyhkp8m2k-source/modules/generic/meta-maintainers.nix" target="_top">
+/nix/store/0s46vlv8krpc6wfspxzsdfxlyhkp8m2k-source/modules/generic/meta-maintainers.nix
 </a></code>
 </td></tr>
 </table>
@@ -102073,6 +102461,34 @@ attribute set of (YAML 1.1 value or absolute path or strings concatenated with �
     };
   };
 }
+</code></pre>
+
+<p><span class="emphasis"><em>Declared by:</em></span></p>
+<table border="0" summary="Simple list" class="simplelist">
+<tr><td>
+<code class="filename"><a class="filename"  href="https://github.com/nix-community/home-manager/blob/master/modules/programs/zellij.nix" target="_top">
+&lt;home-manager/modules/programs/zellij.nix&gt;
+</a></code>
+</td></tr>
+</table>
+</dd>
+<dt>
+ <span class="term">
+ <a id="opt-programs.zellij.plugins"></a><a class="term" href="options.xhtml#opt-programs.zellij.plugins"><code class="option">programs.zellij.plugins</code>
+  </a>
+ </span>
+</dt>
+<dd>
+<p>List of Zellij plugins</p>
+
+<p><span class="emphasis"><em>Type:</em></span>
+list of package</p>
+
+<p><span class="emphasis"><em>Default:</em></span></p><pre><code class="programlisting nix">[ ]
+</code></pre>
+
+<p><span class="emphasis"><em>Example:</em></span></p><pre><code class="programlisting nix">with pkgs.zellijPlugins; [ jbz vim-plugins-navigator zjstatus ]
+
 </code></pre>
 
 <p><span class="emphasis"><em>Declared by:</em></span></p>
